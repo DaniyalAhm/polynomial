@@ -6,6 +6,10 @@ class X:
 
     def __repr__(self):
         return "X"
+    
+    #Made an evaluate method to return the number in case that our number is some instance of i
+    def evaluate(self,num):
+        return num
 
 class Int:
     def __init__(self, i):
@@ -14,6 +18,7 @@ class Int:
     def __repr__(self):
         return str(self.i)
     
+    #Made an evaluate method to return the int variable in case that our number is some instance of i
     def evaluate(self,num):
         return self.i
 
@@ -26,6 +31,25 @@ class Add:
         return repr(self.p1) + " + " + repr(self.p2)
     
 
+    def evaluate(self,num):
+        #For Add
+        x= 0
+        y=0
+
+        #Check if self.p1 is an instance of some other class in that case, evaluate it through its respective method
+        if isinstance(self.p1,Add) or  isinstance(self.p1,div) or isinstance(self.p1,Mul) or isinstance(self.p1,Int) or  isinstance(self.p1, X) :
+            x= self.p1.evaluate(num)
+
+
+        #Check if self.p2 is an instance of some other class in that case, evaluate it through its respective method
+        if isinstance(self.p2,Add) or isinstance(self.p2,div) or isinstance(self.p2,Mul) or  isinstance(self.p2,Int) or  isinstance(self.p2, X):
+            y = self.p2.evaluate(num)
+
+
+
+        return x+y
+
+        
 
             
 
@@ -52,6 +76,27 @@ class Mul:
             return repr(self.p1) + " * ( " + repr(self.p2) + " )"
         return repr(self.p1) + " * " + repr(self.p2)
     
+
+    def evaluate(self, num):
+        #For Multiply
+        x= 0
+        y=0
+
+        #Check if self.p1 is an instance of some other class in that case, evaluate it through its respective method
+        if isinstance(self.p1,Add) or  isinstance(self.p1,div) or isinstance(self.p1,Mul) or isinstance(self.p1,Int) or  isinstance(self.p1, X) :
+            x= self.p1.evaluate(num)
+
+        #Check if self.p2 is an instance of some other class in that case, evaluate it through its respective method
+        if isinstance(self.p2,Add) or isinstance(self.p2,div) or isinstance(self.p2,Mul) or  isinstance(self.p2,Int) or  isinstance(self.p2, X) :
+            y = self.p2.evaluate(num)
+
+
+
+
+
+        return x*y
+    
+
 class div:
     def __init__(self, p1,p2) :
         self.p1 =p1
@@ -72,7 +117,26 @@ class div:
         return repr(self.p1) + " / " + repr(self.p2)
     
 
+    def evaluate(self,num):
+        #For Add
+        x =0
+        y= 0
 
+        #Check if self.p1 is an instance of some other class in that case, evaluate it through its respective method
+        if isinstance(self.p1,Mul) or  isinstance(self.p1,div) or isinstance(self.p1,Add) or  isinstance(self.p1,Int)  or isinstance(self.p1, X):
+            x = self.p1.evaluate(num)
+
+
+                
+        #Check if self.p2 is an instance of some other class in that case, evaluate it through its respective method
+        if isinstance(self.p2,Mul) or isinstance(self.p2,div) or isinstance(self.p2,Add) or  isinstance(self.p2,Int) or  isinstance(self.p2, X):
+            y = self.p2.evaluate(num)
+
+
+        
+        return (x*1.0)/y
+
+       
 
         
 def checkifX(can, num):
@@ -104,7 +168,7 @@ print(test3)
 
 poly = Add( Add( Int(4), Int(3)), Add( X(), Mul( Int(1), Add( Mul(X(), X()), Int(1)))))
 print(poly)
-
+print(poly.evaluate(-1))
 
 
 
